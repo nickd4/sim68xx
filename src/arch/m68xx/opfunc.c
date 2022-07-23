@@ -398,7 +398,9 @@ void subb_dir ()	{reg_setaccb (alu_subbyte (reg_getaccb (), getbyte_dir (), 0));
 void subb_ext ()	{reg_setaccb (alu_subbyte (reg_getaccb (), getbyte_ext (), 0));}
 void subb_ind_x ()	{reg_setaccb (alu_subbyte (reg_getaccb (), getbyte_ix  (), 0));}
 
+#ifndef M6805
 void swi_inh ()	{int_addr (SWIVECTOR);}
+#endif
 void tab_inh ()	{reg_setaccb (alu_bittestbyte (reg_getacca ()));}
 void tap_inh ()	{reg_setccr (reg_getacca ());}
 void tba_inh ()	{reg_setacca (alu_bittestbyte (reg_getaccb()));}

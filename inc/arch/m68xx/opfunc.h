@@ -8,7 +8,7 @@
 # define _P(s) ()
 #endif
 
-#if defined(H6303)
+#if 1 //defined(H6303)
 extern u_int rti_pc;
 extern u_int call_level;
 #endif

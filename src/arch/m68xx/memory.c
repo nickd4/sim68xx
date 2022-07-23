@@ -19,6 +19,47 @@
 #include "memory.h"
 #include "callstac.h"
 
+#if 1 // altair 680
+#include "io.h"
+
+#define ACIACS 0xf000
+#define ACIADA 0xf001
+#define STRAPS 0xf002
+
+/*
+ * Pseudo-received data buffer used by rdr_getb() routines
+ */
+static u_char	recvbuf[BUFSIZE];
+static int	rxindex      = 0;	/* Index of first byte in recvbuf */
+static int	rxinterrupts = 0;	/* Number of outstanding rx interrupts */
+static u_char   rxchar       = 0;
+
+/*
+ * asci_in - input to SCI
+ *
+ * increment number of outstanding rx interrupts
+ */
+asci_in (s, nbytes)
+	u_char *s;
+	int nbytes;
+{
+	int i;
+
+	for (i=0; i<nbytes; i++)
+		if (rxinterrupts < BUFSIZE)
+			recvbuf[rxinterrupts++] = s[i];
+		else
+			warning ("asci_in:: buffer full\n");
+}
+
+asci_print ()
+{
+	printf ("asci recvbuf:\n");
+	fprinthex (stdout, recvbuf + rxindex, rxinterrupts);
+}
+
+
+#endif
 
 /*
  * Memory variables
@@ -145,6 +186,43 @@ u_char mem_getb (u_int addr)
 		break_addr = addr;
 	}
 
+#if 1 // altair 680
+	switch (addr) {
+	case ACIACS:
+		// bit 0 = rx ready
+		// bit 1 = tx ready
+		return rxinterrupts ? 3 : 2;
+	case ACIADA:
+		/*
+		 * If recvbuf is not empty, eat a byte from it
+		 * into RDR
+		 */
+		if (rxinterrupts) {
+			rxchar = recvbuf[rxindex++];
+			rxinterrupts--;
+		}
+		/*
+		 * If the cpu has read all bytes in recvbuf[]
+		 * make recvbuf[] ready for more user sci data input
+		 */
+		if (rxinterrupts == 0)
+			rxindex = 0;
+
+		// translation for MS BASIC
+		switch (rxchar) {
+		case 0x7f:
+			return '\b';
+		case '\n':
+			return '\r';
+		}
+		return rxchar;
+	case STRAPS:
+		// bit 2 = number of stop bits, assume -1
+		// bit 7 = 0 means there is a terminal
+		return 0;
+	}
+#endif
+
 	if (offs >= 0 && offs < NIREGS) {
 		if (ireg_getb_func[offs])
 			return (*ireg_getb_func[offs])(offs);
@@ -182,6 +260,19 @@ void mem_putb (u_int addr, u_char value)
 		break_flag = 1; /* Signal execution loop to stop */
 		break_addr = addr;
 	}
+
+#if 1 // altair 680
+	switch (addr) {
+	case ACIACS:
+		return;
+	case ACIADA:
+		// MS BASIC seems to set high bit on last char of each line?
+		io_putb(value & 0x7f);
+		return;
+	case STRAPS:
+		return;
+	}
+#endif
 
 	if (offs >= 0 && offs < NIREGS) {
 		if (ireg_putb_func[offs])

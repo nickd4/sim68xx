@@ -15,6 +15,10 @@
 #  include "io.h"
 #endif
 
+#if 1 // altair 680
+#include "memory.h"
+#endif
+
 #ifdef HAS_SCI
 #  include "sci.h"
 #endif
@@ -80,6 +84,10 @@ struct iodev {
  */
 static
 struct iodev iotab[] = {
+
+#if 1 // altair 680
+	{asci_in, asci_print, "asci"},
+#endif
 
 #ifdef HAS_SCI
 	{sci_in, sci_print, "sci"},

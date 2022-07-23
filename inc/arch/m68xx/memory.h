@@ -59,6 +59,10 @@ extern void mem_putw (u_int addr, u_int value);
 
 
 /* memory.c */
+#if 1 // altair 680
+extern int asci_in    P_((u_char *s, int nbytes));
+extern int asci_print P_(());
+#endif
 extern u_char *mem_init        P_(());
 extern void    mem_print_ascii P_((u_int startaddr, u_int nbytes));
 extern int     mem_print       P_((u_int startaddr, u_int nbytes, u_int nperline));
