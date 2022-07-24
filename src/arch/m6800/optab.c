@@ -2,20 +2,13 @@
 /* Copyright (c) 1994-1996 Arne Riiber. */
 /* All rights reserved.                 */
 /* >>>                                  */
-/* 6301map.c - opcode map 6301 cpu core */
-
-#ifndef H6301
-#define H6301
-#endif
+/* 6800map.c - opcode map 6800 cpu core */
 
 #include "optab.h"		/* struct opcodetab */
 #include "opfunc.h"
 
 /*
- * Opcode map 1 - the only one for 6301/6303/6803
- *
- * Instructions:
- *	6301 = 6801 + aim/eim/oim/tim/xgdx/slp (ref. Hitatchi).
+ * Opcode map 1 - the only one for 6800
  */
 struct opcode opcodetab[256] = {
 
@@ -23,8 +16,8 @@ struct opcode opcodetab[256] = {
 	{0x01, 0, nop_inh,	1,	"nop"},
 	{0x02, 0, trap,		0,	"---"},
 	{0x03, 0, trap,		0,	"---"},
-	{0x04, 0, lsrd_inh,	1,	"lsrd"},
-	{0x05, 0, asld_inh,	1,	"asld"},
+	{0x04, 0, trap,		1,	"---"},
+	{0x05, 0, trap,		1,	"---"},
 	{0x06, 0, tap_inh,	1,	"tap"},
 	{0x07, 0, tpa_inh,	1,	"tpa"},
 	{0x08, 0, inx_inh,	1,	"inx"},
@@ -38,23 +31,23 @@ struct opcode opcodetab[256] = {
 
 	{0x10, 0, sba_inh,	1,	"sba"},
 	{0x11, 0, cba_inh,	1,	"cba"},
- 	{0x12, 0, trap,		0,	"---"},
- 	{0x13, 0, trap,		0,	"---"},
- 	{0x14, 0, trap,		0,	"---"},
- 	{0x15, 0, trap,		0,	"---"},
+	{0x12, 0, trap,		0,	"---"},
+	{0x13, 0, trap,		0,	"---"},
+	{0x14, 0, trap,		0,	"---"},
+	{0x15, 0, trap,		0,	"---"},
 	{0x16, 0, tab_inh,	1,	"tab"},
 	{0x17, 0, tba_inh,	1,	"tba"},
- 	{0x18, 0, xgdx_inh,	2,	"xgdx"},
+	{0x18, 0, xgdx_inh,	2,	"xgdx"},
 	{0x19, 0, daa_inh,	2,	"daa"},
- 	{0x1a, 0, slp_inh,	4,	"slp"},
+	{0x1a, 0, slp_inh,	4,	"slp"},
 	{0x1b, 0, aba_inh,	1,	"aba"},
- 	{0x1c, 0, trap,		0,	"---"},
- 	{0x1d, 0, trap,		0,	"---"},
- 	{0x1e, 0, trap,		0,	"---"},
- 	{0x1f, 0, trap,		0,	"---"},
+	{0x1c, 0, trap,		0,	"---"},
+	{0x1d, 0, trap,		0,	"---"},
+	{0x1e, 0, trap,		0,	"---"},
+	{0x1f, 0, trap,		0,	"---"},
 
 	{0x20, 1, bra_rel,	3,	"bra  %02x"},
-	{0x21, 1, brn_rel,	3,	"brn  %02x"},
+	{0x21, 1, trap,		3,	"---"},
 	{0x22, 1, bhi_rel,	3,	"bhi  %02x"},
 	{0x23, 1, bls_rel,	3,	"bls  %02x"},
 	{0x24, 1, bcc_rel,	3,	"bcc  %02x"},
@@ -80,10 +73,10 @@ struct opcode opcodetab[256] = {
 	{0x37, 0, pshb_inh,	4,	"pshb"},
 	{0x38, 0, pulx_inh,	4,	"pulx"},
 	{0x39, 0, rts_inh,	5,	"rts\n"},
-	{0x3a, 0, abx_inh,	1,	"abx"},
+	{0x3a, 0, trap,		1,	"---"},
 	{0x3b, 0, rti_inh,	10,	"rti"},
 	{0x3c, 0, pshx_inh,	5 ,	"pshx"},
-	{0x3d, 0, mul_inh,	7,	"mul"},
+	{0x3d, 0, trap,		7,	"---"},
 	{0x3e, 0, wai_inh,	9,	"wai"},
 	{0x3f, 0, swi_inh,	12,	"swi"},
 
@@ -122,34 +115,34 @@ struct opcode opcodetab[256] = {
 	{0x5f, 0, clrb_inh,	1,	"clrb"},
 
 	{0x60, 1, neg_ind_x,	6,	"neg %02x,x"},
- 	{0x61, 1, aim_ind_x,	7,	"aim %02x,x"},	/* 6301 */
- 	{0x62, 1, oim_ind_x,	7,	"oim %02x,x"},	/* 6301 */
+	{0x61, 0, trap,		0,	"---"},
+	{0x62, 0, trap,		0,	"---"},
 	{0x63, 1, com_ind_x,	6,	"com %02x,x"},
 	{0x64, 1, lsr_ind_x,	6,	"lsr %02x,x"},
- 	{0x65, 1, eim_ind_x,	7,	"eim %02x,x"},	/* 6301 */
+	{0x65, 0, trap,		0,	"---"},
 	{0x66, 1, ror_ind_x,	6,	"ror %02x,x"},
 	{0x67, 1, asr_ind_x,	6,	"asr %02x,x"},
 	{0x68, 1, lsl_ind_x,	6,	"lsl %02x,x"},
 	{0x69, 1, rol_ind_x,	6,	"rol %02x,x"},
 	{0x6a, 1, dec_ind_x,	6,	"dec %02x,x"},
- 	{0x6b, 1, tim_ind_x,	5,	"tim %02x,x"},	/* 6301 */
+	{0x6b, 0, trap,		0,	"---"},
 	{0x6c, 1, inc_ind_x,	6,	"inc %02x,x"},
 	{0x6d, 1, tst_ind_x,	4,	"tst %02x,x"},
 	{0x6e, 1, jmp_ind_x,	3,	"jmp %02x,x"},
 	{0x6f, 1, clr_ind_x,	5,	"clr %02x,x"},
 
 	{0x70, 2, neg_ext,	6,	"neg %04x"},
- 	{0x71, 0, aim_dir,	6,	"aim %02x"},	/* 6301 */
- 	{0x72, 0, oim_dir,	6,	"oim %02x"},	/* 6301 */
+	{0x71, 0, trap,		0,	"---"},
+	{0x72, 0, trap,		0,	"---"},
 	{0x73, 2, com_ext,	6,	"com %04x"},
 	{0x74, 2, lsr_ext,	6,	"lsr %04x"},
- 	{0x75, 0, eim_dir,	6,	"eim %02x"},	/* 6301 */
+	{0x75, 0, trap,		0,	"---"},
 	{0x76, 2, ror_ext,	6,	"ror %04x"},
 	{0x77, 2, asr_ext,	6,	"asr %04x"},
 	{0x78, 2, lsl_ext,	6,	"lsl %04x"},
 	{0x79, 2, rol_ext,	6,	"rol %04x"},
 	{0x7a, 2, dec_ext,	6,	"dec %04x"},
- 	{0x7b, 0, tim_dir,	4,	"tim %02x"},
+	{0x7b, 0, tim_dir,	4,	"tim %02x"},
 	{0x7c, 2, inc_ext,	6,	"inc %04x"},
 	{0x7d, 2, tst_ext,	6,	"tst %04x"},
 	{0x7e, 2, jmp_ext,	3,	"jmp %04x"},
@@ -170,7 +163,7 @@ struct opcode opcodetab[256] = {
 	{0x8c, 2, cpx_imm,	3,	"cpx  #%04x"},
 	{0x8d, 1, bsr_rel,	5,	"bsr  %02x"},
 	{0x8e, 2, lds_imm,	3,	"lds  #%04x"},
- 	{0x8f, 0, trap,		0,	"---"},
+	{0x8f, 0, trap,		0,	"---"},
 
 	{0x90, 1, suba_dir,	3,	"suba %02x"},
 	{0x91, 1, cmpa_dir,	3,	"cmpa %02x"},
@@ -185,7 +178,7 @@ struct opcode opcodetab[256] = {
 	{0x9a, 1, oraa_dir,	3,	"oraa %02x"},
 	{0x9b, 1, adda_dir,	3,	"adda %02x"},
 	{0x9c, 1, cpx_dir,	4,	"cpx  %02x"},
-	{0x9d, 1, jsr_dir,	5,	"jsr  %02x\n"},
+	{0x9d, 1, trap,		5,	"---"},
 	{0x9e, 1, lds_dir,	4,	"lds  %02x"},
 	{0x9f, 1, sts_dir,	4,	"sts  %02x"},
 
@@ -219,14 +212,14 @@ struct opcode opcodetab[256] = {
 	{0xBa, 2, oraa_ext,	4,	"oraa %04x"},
 	{0xBb, 2, adda_ext,	4,	"adda %04x"},
 	{0xBc, 2, cpx_ext,	5,	"cpx  %04x"},
-	{0xBd, 2, jsr_ext,	6,	"jsr  %04x"},
+	{0xBd, 2, jsr_ext,	6,	"jsr  %04x\n"},
 	{0xBe, 2, lds_ext,	5,	"lds  %04x"},
 	{0xBf, 2, sts_ext,	5,	"sts  %04x"},
 
 	{0xC0, 1, subb_imm,	2,	"subb #%02x"},
 	{0xC1, 1, cmpb_imm,	2,	"cmpb #%02x"},
 	{0xC2, 1, sbcb_imm,	2,	"sbcb #%02x"},
-	{0xC3, 2, addd_imm,	3,	"addd #%04x"},
+	{0xC3, 2, trap,		3,	"---"},
 	{0xC4, 1, andb_imm,	2,	"andb #%02x"},
 	{0xC5, 1, bitb_imm,	2,	"bitb #%02x"},
 	{0xC6, 1, ldab_imm,	2,	"ldab #%02x"},
@@ -235,7 +228,7 @@ struct opcode opcodetab[256] = {
 	{0xC9, 1, adcb_imm,	2,	"adcb #%02x"},
 	{0xCa, 1, orab_imm,	2,	"orab #%02x"},
 	{0xCb, 1, addb_imm,	2,	"addb #%02x"},
-	{0xCc, 2, ldd_imm,	3,	"ldd  #%04x"},
+	{0xCc, 2, trap,		3,	"---"},
 	{0xCd, 0, trap,		0,	"---"},
 	{0xCe, 2, ldx_imm,	3,	"ldx  #%04x"},
 	{0xCf, 0, trap,		0,	"---"},
@@ -243,7 +236,7 @@ struct opcode opcodetab[256] = {
 	{0xD0, 1, subb_dir,	3,	"subb %02x"},
 	{0xD1, 1, cmpb_dir,	3,	"cmpb %02x"},
 	{0xD2, 1, sbcb_dir,	3,	"sbcb %02x"},
-	{0xD3, 1, addd_dir,	4,	"addd %02x"},
+	{0xD3, 1, trap,		4,	"---"},
 	{0xD4, 1, andb_dir,	3,	"anda %02x"},
 	{0xD5, 1, bitb_dir,	3,	"bita %02x"},
 	{0xD6, 1, ldab_dir,	3,	"ldab %02x"},
@@ -252,7 +245,7 @@ struct opcode opcodetab[256] = {
 	{0xD9, 1, adcb_dir,	3,	"adcb %02x"},
 	{0xDa, 1, orab_dir,	3,	"orab %02x"},
 	{0xDb, 1, addb_dir,	3,	"addb %02x"},
-	{0xDc, 1, ldd_dir,	4,	"ldd  %02x"},
+	{0xDc, 1, trap,		4,	"---"},
 	{0xDd, 1, std_dir,	4,	"std  %02x"},
 	{0xDe, 1, ldx_dir,	4,	"ldx  %02x"},
 	{0xDf, 1, stx_dir,	4,	"stx  %02x"},
@@ -260,16 +253,16 @@ struct opcode opcodetab[256] = {
 	{0xE0, 1, subb_ind_x,	4,	"subb %02x,x"},
 	{0xE1, 1, cmpb_ind_x,	4,	"cmpb %02x,x"},
 	{0xE2, 1, sbcb_ind_x,	4,	"sbcb %02x,x"},
-	{0xE3, 1, addd_ind_x,	5,	"addd %02x,x"},
+	{0xE3, 1, trap,		5,	"---"},
 	{0xE4, 1, andb_ind_x,	4,	"anda %02x,x"},
 	{0xE5, 1, bitb_ind_x,	4,	"bita %02x,x"},
 	{0xE6, 1, ldab_ind_x,	4,	"ldab %02x,x"},
-	{0xE7, 1, stab_ind_x,	4,	"stab %02x,x"},
+	{0xE7, 1, stab_ind_x,	0,	"stab %02x,x"},
 	{0xE8, 1, eorb_ind_x,	4,	"eorb %02x,x"},
 	{0xE9, 1, adcb_ind_x,	4,	"adcb %02x,x"},
 	{0xEa, 1, orab_ind_x,	4,	"orab %02x,x"},
 	{0xEb, 1, addb_ind_x,	4,	"addb %02x,x"},
-	{0xEc, 1, ldd_ind_x,	5,	"ldd  %02x,x"},
+	{0xEc, 1, trap,		5,	"---"},
 	{0xEd, 1, std_ind_x,	5,	"std  %02x,x"},
 	{0xEe, 1, ldx_ind_x,	5,	"ldx  %02x,x"},
 	{0xEf, 1, stx_ind_x,	5,	"stx  %02x,x"},
@@ -277,7 +270,7 @@ struct opcode opcodetab[256] = {
 	{0xF0, 2, subb_ext,	4,	"subb %04x"},
 	{0xF1, 2, cmpb_ext,	4,	"cmpb %04x"},
 	{0xF2, 2, sbcb_ext,	4,	"sbcb %04x"},
-	{0xF3, 2, addd_ext,	5,	"addd %04x"},
+	{0xF3, 2, trap,		5,	"---"},
 	{0xF4, 2, andb_ext,	4,	"anda %04x"},
 	{0xF5, 2, bitb_ext,	4,	"bita %04x"},
 	{0xF6, 2, ldab_ext,	4,	"ldab %04x"},
@@ -286,7 +279,7 @@ struct opcode opcodetab[256] = {
 	{0xF9, 2, adcb_ext,	4,	"adcb %04x"},
 	{0xFa, 2, orab_ext,	4,	"orab %04x"},
 	{0xFb, 2, addb_ext,	4,	"addb %04x"},
-	{0xFc, 2, ldd_ext,	5,	"ldd  %04x"},
+	{0xFc, 2, trap,		5,	"---"},
 	{0xFd, 2, std_ext,	5,	"std  %04x"},
 	{0xFe, 2, ldx_ext,	5,	"ldx  %04x"},
 	{0xFf, 2, stx_ext,	5,	"stx  %04x"}

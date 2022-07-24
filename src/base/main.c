@@ -101,6 +101,15 @@ int main (int argc, char *argv[])
 	if (!mem_init ())
 		return errno;
 
+#if 1 // for decode_6800.py
+ for (int i = 0; i < 0x100; ++i) {
+  mem_putb(0x100, i);
+  mem_putb(0x101, 0x12);
+  mem_putb(0x102, 0x34);
+  instr_print(0x100);
+ }
+#endif
+
 	if ((errcode = board_install ()) < 0)
 		return errcode;
 
