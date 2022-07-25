@@ -97,7 +97,7 @@ void asr_addr (u_int addr)
 	u_int operand = mem_getb (addr);
 	mem_putb (addr, alu_shrbyte (operand, operand & 0x80));
 }
-void clr_addr (addr) {mem_putb (addr, alu_clrbyte (mem_getb (addr)));}
+void clr_addr (addr) {mem_putb (addr, alu_clrbyte (/*mem_getb (addr)*/0));}
 void com_addr (addr) {mem_putb (addr, alu_combyte (mem_getb (addr)));}
 void dec_addr (addr) {mem_putb (addr, alu_decbyte (mem_getb (addr)));}
 void jsr_addr (addr)
