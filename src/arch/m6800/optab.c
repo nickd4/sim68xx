@@ -151,7 +151,7 @@ struct opcode opcodetab[256] = {
 	{0x80, 1, suba_imm,	2,	"suba #%02x"},
 	{0x81, 1, cmpa_imm,	2,	"cmpa #%02x"},
 	{0x82, 1, sbca_imm,	2,	"sbca #%02x"},
-	{0x83, 2, subd_imm,	3,	"subd #%02x"},
+	{0x83, 0, trap,		0,	"---"},
 	{0x84, 1, anda_imm,	2,	"anda #%02x"},
 	{0x85, 1, bita_imm,	2,	"bita #%02x"},
 	{0x86, 1, ldaa_imm,	2,	"ldaa #%02x"},
