@@ -234,10 +234,10 @@ void com_ind_x ()	{com_addr (getaddr_ix  ());}
 void coma_inh ()	{reg_setacca (alu_combyte (reg_getacca ()));}
 void comb_inh ()	{reg_setaccb (alu_combyte (reg_getaccb ()));}
 
-void cpx_imm ()	{alu_subword (reg_getix (), getword_imm (), 0);}
-void cpx_dir ()	{alu_subword (reg_getix (), getword_dir (), 0);}
-void cpx_ext ()	{alu_subword (reg_getix (), getword_ext (), 0);}
-void cpx_ind_x ()	{alu_subword (reg_getix (), getword_ix  (), 0);}
+void cpx_imm ()	{alu_cmpword (reg_getix (), getword_imm (), 0);}
+void cpx_dir ()	{alu_cmpword (reg_getix (), getword_dir (), 0);}
+void cpx_ext ()	{alu_cmpword (reg_getix (), getword_ext (), 0);}
+void cpx_ind_x ()	{alu_cmpword (reg_getix (), getword_ix  (), 0);}
 
 /*
  *  DAA - Decimal adjust sum of 2 BCD digits in A to two BCD nibbles in A
