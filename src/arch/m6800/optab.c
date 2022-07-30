@@ -72,7 +72,7 @@ struct opcode opcodetab[256] = {
 	{0x36, 0, psha_inh,	4,	"psha"},
 	{0x37, 0, pshb_inh,	4,	"pshb"},
 	{0x38, 0, trap,		0,	"---"},
-	{0x39, 0, rts_inh,	5,	"rts\n"},
+	{0x39, 0, rts_inh,	5,	"rts"},
 	{0x3a, 0, trap,		1,	"---"},
 	{0x3b, 0, rti_inh,	10,	"rti"},
 	{0x3c, 0, trap,		0,	"---"},
@@ -212,7 +212,7 @@ struct opcode opcodetab[256] = {
 	{0xBa, 2, oraa_ext,	4,	"oraa %04x"},
 	{0xBb, 2, adda_ext,	4,	"adda %04x"},
 	{0xBc, 2, cpx_ext,	5,	"cpx  %04x"},
-	{0xBd, 2, jsr_ext,	6,	"jsr  %04x\n"},
+	{0xBd, 2, jsr_ext,	6,	"jsr  %04x"},
 	{0xBe, 2, lds_ext,	5,	"lds  %04x"},
 	{0xBf, 2, sts_ext,	5,	"sts  %04x"},
 

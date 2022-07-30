@@ -58,6 +58,13 @@ char *progname;
 
 extern u_char *mem_init();
 extern int board_install();
+
+#if 1 // for use with decode_6800.py
+// we can't include the headers here as paths are not set up
+extern u_int instr_print(u_int addr);
+extern void mem_putb(u_int addr, u_char value);
+#endif
+
 /*
 char * getprogname ()
 {
@@ -73,6 +80,19 @@ int main (int argc, char *argv[])
 	char *host;
 	int   port;
 	char  *filename;
+
+#if 1 // for use with decode_6800.py
+ mem_init();
+ printf("opcodes\n");
+ for (int i = 0; i < 0x100; ++i) {
+  mem_putb(0x100, i);
+  mem_putb(0x101, 0x12);
+  mem_putb(0x102, 0x34);
+  instr_print(0x100);
+ }
+ printf("\n");
+ return 0;
+#endif
 
 	progname = argv[0];
 	filename = argv[1];
